@@ -4,7 +4,20 @@
 import os
 
 
-_database_url = os.getenv("DATABASE_URL", "").strip()
+def _configured_database_url():
+    database_url = os.getenv("DATABASE_URL", "").strip()
+    if database_url:
+        return database_url
+
+    try:
+        import streamlit as st
+
+        return str(st.secrets.get("DATABASE_URL", "")).strip()
+    except Exception:
+        return ""
+
+
+_database_url = _configured_database_url()
 _placeholder_hosts = {
     "actual-host",
     "real-host",
