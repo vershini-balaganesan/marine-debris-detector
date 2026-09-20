@@ -12,7 +12,12 @@ def _configured_database_url():
     try:
         import streamlit as st
 
-        return str(st.secrets.get("DATABASE_URL", "")).strip()
+        database_url = st.secrets.get("DATABASE_URL", "")
+        if database_url:
+            return str(database_url).strip()
+
+        postgresql = st.secrets.get("connections", {}).get("postgresql", {})
+        return str(postgresql.get("url", "")).strip()
     except Exception:
         return ""
 
