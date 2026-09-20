@@ -27,6 +27,7 @@ _placeholder_hosts = {
     "actual-host",
     "real-host",
     "cloud.example",
+    "db.example.com",
     "host",
     "your-real-postgresql-url",
 }
