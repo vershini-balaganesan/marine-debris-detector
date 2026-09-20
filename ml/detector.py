@@ -8,7 +8,6 @@ elsewhere and produced best.pt.
 
 import os
 from datetime import datetime, timezone
-from ultralytics import YOLO
 
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "..", "model", "best.onnx")
 
@@ -19,6 +18,8 @@ def load_model():
     """Load the YOLO model once and cache it. Raises a clear error if missing."""
     global _model
     if _model is None:
+        from ultralytics import YOLO
+
         if not os.path.exists(MODEL_PATH):
             raise FileNotFoundError(
                 f"Model file not found at {MODEL_PATH}. "
