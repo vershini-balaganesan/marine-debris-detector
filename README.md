@@ -1,37 +1,136 @@
-## Database configuration
+🌊 Marine Debris Dashboard
 
-## Publish with Streamlit Community Cloud
+An AI-based dashboard for detecting marine debris, recording detection data, identifying debris hotspots, and visualizing the results on a web interface.
 
-1. Create a GitHub repository and upload this project, including `app.py`,
-	`requirements.txt`, and `model/best.onnx`.
-2. Open [share.streamlit.io](https://share.streamlit.io/) and sign in with
-	GitHub.
-3. Select **Create app**, choose the repository and branch, and set the main
-	file path to `app.py`.
-4. Add the database connection under **Advanced settings** as a secret:
+Features
 
-```toml
-DATABASE_URL = "postgresql://user:password@host:5432/database?sslmode=require"
-```
+- 🤖 YOLO26-based debris detection
+- 🗑️ Detects bottle, plastic, metal, glass, and other waste
+- 📍 GPS-based location tagging
+- 🕒 Timestamped detection records
+- 🗺️ Debris hotspot visualization
+- 📊 Detection statistics and historical data
+- 🧠 Local AI-assisted hotspot analysis using Ollama
+- 🌐 Interactive web dashboard
 
-5. Deploy the app. Streamlit Community Cloud will provide a permanent public
-	URL such as `https://your-app-name.streamlit.app`.
+How It Works
 
-The PostgreSQL database must be reachable from the internet and must contain
-the tables defined in `database/schema.sql`. Do not commit database passwords
-or other secrets to GitHub.
+Camera
+   ↓
+YOLO26 Detection
+   ↓
+GPS + Timestamp
+   ↓
+Database
+   ↓
+Hotspot Analysis
+   ↓
+Ollama AI Analysis
+   ↓
+Dashboard
 
-The application supports any hosted PostgreSQL provider. Set `DATABASE_URL` in
-the cloud service's environment variables, using the connection string supplied
-by that provider:
+Project Structure
 
-```text
-DATABASE_URL=postgresql://user:password@host:5432/database?sslmode=require
-```
+marine-debris-dashboard/
+│
+├── app.py
+├── requirements.txt
+├── model/
+│   └── best.onnx
+│
+├── database/
+│   └── schema.sql
+│
+├── backend/
+├── frontend/
+└── README.md
 
-Do not commit the connection string. The existing local PostgreSQL settings are
-used when `DATABASE_URL` is not set.
+Detection Model
 
-After configuring the cloud database, run `database/schema.sql` once against it
-to create the application tables, then deploy the application with the same
-environment variable.
+The dashboard uses a trained YOLO26n model.
+
+Classes
+
+Bottle
+Plastic
+Metal
+Glass
+Other
+
+Model Performance
+
+Metric| Value
+Precision| 0.590
+Recall| 0.608
+mAP@50| 0.545
+mAP@50-95| 0.421
+
+Requirements
+
+- Python 3.10+
+- Ultralytics / YOLO
+- OpenCV
+- ONNX Runtime
+- Streamlit
+- PostgreSQL
+- Ollama
+
+Install dependencies:
+
+pip install -r requirements.txt
+
+Run Locally
+
+streamlit run app.py
+
+The dashboard will open in your browser.
+
+Database
+
+The dashboard can use PostgreSQL to store detection records.
+
+Configure the database using the "DATABASE_URL" environment variable:
+
+DATABASE_URL=<your-postgresql-connection-string>
+
+Initialize the database using:
+
+database/schema.sql
+
+Never commit database credentials, API keys, or other secrets to GitHub.
+
+Ollama
+
+Ollama provides local AI-assisted analysis of debris hotspots.
+
+The analysis can consider:
+
+- Debris count
+- Debris categories
+- Historical detection data
+- Changes in hotspot activity
+
+The AI model runs locally through Ollama.
+
+Deployment
+
+The dashboard can be deployed using Streamlit Community Cloud.
+
+1. Push the project to GitHub.
+2. Create a Streamlit app.
+3. Select the repository and "app.py".
+4. Add required environment variables through Streamlit Secrets.
+5. Deploy.
+
+Database credentials should be stored only in the deployment secrets and not in the GitHub repository.
+
+Dataset
+
+The detection model was trained using a combined dataset derived from:
+
+- BEPLI
+- TACO
+- FloW
+
+The datasets were unified into a common five-class label structure.
+
