@@ -28,6 +28,7 @@ _placeholder_hosts = {
     "real-host",
     "cloud.example",
     "host",
+    "your-real-postgresql-url",
 }
 _is_placeholder_url = any(host in _database_url for host in _placeholder_hosts)
 DATABASE_URL = (
