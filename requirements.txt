@@ -1,0 +1,12 @@
+streamlit
+streamlit-folium
+pandas
+numpy
+scikit-learn
+matplotlib
+folium
+geopy
+requests
+psycopg2-binary
+ultralytics
+opencv-python-headless
